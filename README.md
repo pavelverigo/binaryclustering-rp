@@ -1,16 +1,35 @@
-cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -GNinja -DCMAKE_BUILD_TYPE=Release -B out
-
 # Building using CMake
 
+```
 cmake -B out
 
 cmake --build out
+```
 
-./out/CmdRunner -THREADS 2 -SIM Jaccard
+for clang++ use
 
-valgrind --tool=massif --time-unit=ms ./out/CmdRunner -THREADS 1 -SIM Jaccard
+```
+cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -GNinja -DCMAKE_BUILD_TYPE=Release -B out
+```
 
-valgrind --tool=massif --time-unit=ms ./out/CmdRunner -THREADS 1 -SIM Jaccard -DATA data/hg19/expr.csv
+# Running on dataset
 
+```
+./out/CmdRunner -SIM Jaccard -DATA data/hg19/expr.csv
+```
 
+# Valgrind
+
+```
+valgrind --tool=massif --time-unit=ms ./out/CmdRunner -SIM Jaccard -DATA data/hg19/expr.csv
+```
+
+for R
+
+```
 R -d "valgrind --tool=massif --time-unit=ms" --vanilla < your_script.R
+```
+
+# Datasets and scripts
+
+Our binary takes datasets in binarized format, you can find under scripts/CSVmanip, different python scripts which will delete cells/genes names and binarize data
